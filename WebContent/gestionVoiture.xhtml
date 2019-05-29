@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>Agence ALP Administrateur</title>
+</h:head>
+<h:body bgcolor="white">
+	<ui:decorate template="/WEB-INF/templates/BasicTemplate.xhtml">
+		<ui:define name="content">
+		
+		<p:menubar>
+            <p:submenu label="Gestion des Clients" icon="pi pi-users">
+                <p:menuitem value="Créer un nouveau client"
+                    url="gestionClient.xhtml" />
+                <p:menuitem value="Liste des clients" url="gestionClient.xhtml" />
+            </p:submenu>
+
+            <p:submenu label="Gestion des Voitures" icon="pi pi-home">
+                <p:menuitem value="Ajouter une voiture" url="gestionVoiture.xhtml" />
+                <p:menuitem value="Liste des voitures" url="gestionVoiture.xhtml" />
+            </p:submenu>
+
+            <f:facet name="options">
+                <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search" />
+                <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+            </f:facet>
+        </p:menubar>
+		
+			<center>
+				<h2>Ajouter une Voiture</h2>
+				<hr />
+				<h:form>
+					<p:panelGrid columns="2">
+						<f:facet name="header">  
+               Ajouter une voiture 
+         	 </f:facet>
+						<h:outputLabel for="marque" value="Marque" />
+						<p:inputText id="marque" value="#{managerVoiture.marque}" />
+
+						<h:outputLabel for="immatriculation" value="Immatriculation" />
+						<p:inputText id="Immatriculation"
+							value="#{managerVoiture.immatriculation}" />
+
+						<h:outputLabel for="kilometrage" value="Kilométrage" />
+						<p:inputText id="kilometrage"
+							value="#{managerVoiture.kilometrage}" />
+
+						<h:outputLabel for="prix" value="Prix" />
+						<p:inputText id="prix" value="#{managerVoiture.prix}" />
+
+						<p:outputLabel for="categorie" value="Categorie" />
+						<p:selectOneRadio id="categorie" value="#{managerVoiture.categorie}"
+							unselectable="true">
+							<f:selectItem itemLabel="Compacte" itemValue="Compacte" />
+							<f:selectItem itemLabel="Citadine" itemValue="Citadine" />
+							<f:selectItem itemLabel="Berline" itemValue="Berline" />
+							<f:selectItem itemLabel="Utilitaire" itemValue="Utilitaire" />
+						</p:selectOneRadio>
+
+						<p:outputLabel for="nb_place" value="Nombre de Place" />
+						<p:selectOneRadio id="nb_place"
+							value="#{managerVoiture.nb_place}" unselectable="true">
+							<f:selectItem itemLabel="2" itemValue="2" />
+							<f:selectItem itemLabel="4/5" itemValue="4/5" />
+							<f:selectItem itemLabel="7" itemValue="7" />
+						</p:selectOneRadio>
+
+						<p:outputLabel for="couleur" value="Couleur" />
+						<p:selectOneRadio id="couleur" value="#{managerVoiture.couleur}"
+							unselectable="true">
+							<f:selectItem itemLabel="Noire" itemValue="Noire" />
+							<f:selectItem itemLabel="Rouge" itemValue="Rouge" />
+							<f:selectItem itemLabel="Bleue" itemValue="Bleue" />
+							<f:selectItem itemLabel="Blanche" itemValue="Blanche" />
+						</p:selectOneRadio>
+
+						<h:outputText value="Disponibilité: " />
+						<p:selectBooleanButton id="disponibilite" value="#{managerVoiture.disponibilite}"
+							onLabel="Oui" offLabel="Non" style="width:60px" />
+
+						<h:outputText value="Etat: " />
+						<p:selectBooleanButton id="etat" value="#{managerVoiture.etat}"
+							onLabel="Bon" offLabel="Mauvais" style="width:100px" />
+
+					</p:panelGrid>
+					<p:commandButton action="#{managerVoiture.save}" ajax="false" update="mycar" value="Save" icon="ui-icon-check" style="margin:0" />
+
+					<p:dialog modal="true" resizable="false" widgetVar="dlg"
+						header="Values" showEffect="clip">
+						<p:panelGrid columns="2" id="display" columnClasses="label,value">
+							<h:outputText value="Catégorie" />
+							<h:outputText value="#{managerVoiture.categorie}" />
+							<h:outputText value="Nombre de Place" />
+							<h:outputText value="#{managerVoiture.nb_place}" />
+							<h:outputText value="Couleur" />
+							<h:outputText value="#{managerVoiture.couleur}" />
+						</p:panelGrid>
+					</p:dialog>
+					<p:dialog id="dialog" header="Values" modal="true"
+						resizable="false" showEffect="fade" widgetVar="dlg">
+						<h:panelGrid columns="1" id="display2">
+							<h:outputText value="disponibilite: #{managerVoiture.disponibilite}" />
+							<h:outputText value="etat: #{managerVoiture.etat}" />
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+				</center>
+				<hr />
+				<center>
+						<h1>Liste des voitures</h1>
+							<hr/>
+						<p:dataTable value="#{managerVoiture.cacheList2}" var="item" id="mycar"
+						selectionMode="single" selection="#{managerVoiture.selectedVoiture}"
+						rowKey="#{item.id_voiture}">
+						
+				
+						
+		<p:column  headerText="Id">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.id_voiture}" /></f:facet>
+                <f:facet name="input"><p:inputText id="idVoiture" value="#{item.id_voiture}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>
+		<p:column  headerText="Marque">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.marque}" /></f:facet>
+                <f:facet name="input"><p:inputText id="marque" value="#{item.marque}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>
+		<p:column  headerText="Immatriculation">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.immatriculation}" /></f:facet>
+                <f:facet name="input"><p:inputText id="immatriculation" value="#{item.immatriculation}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>
+		<p:column  headerText="Catégorie">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.categorie}" /></f:facet>
+                <f:facet name="input"><p:inputText id="categorie" value="#{item.categorie}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>	
+		<p:column  headerText="Etat">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.etat}" /></f:facet>
+                <f:facet name="input"><p:inputText id="etat" value="#{item.etat}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>			
+		<p:column  headerText="Nombre de Place">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.nbPlace}" /></f:facet>
+                <f:facet name="input"><p:inputText id="nbPlace" value="#{item.nbPlace}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>					
+		<p:column  headerText="Couleur">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.couleur}" /></f:facet>
+                <f:facet name="input"><p:inputText id="couleur" value="#{item.couleur}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>					
+		<p:column  headerText="Disponibilité">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.disponibilite}" /></f:facet>
+                <f:facet name="input"><p:inputText id="disponibilité" value="#{item.disponibilite}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>	
+		<p:column  headerText="Kilometrage">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.kilometrage}" /></f:facet>
+                <f:facet name="input"><p:inputText id="kilometrage" value="#{item.kilometrage}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>				
+		<p:column  headerText="Prix">
+		 <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{item.prix}" /></f:facet>
+                <f:facet name="input"><p:inputText id="prix" value="#{item.prix}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+		</p:column>					
+		<p:column>
+				<p:rowEditor />
+		
+		</p:column>
+
+		</p:dataTable>
+		</center>
+
+		</ui:define>
+	</ui:decorate>
+</h:body>
+</html>

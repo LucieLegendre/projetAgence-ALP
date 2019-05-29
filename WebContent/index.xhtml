@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	>
+	
+	<h:head>
+		<title>Agence ALP</title>
+		</h:head>
+	<h:body bgcolor="white">
+		<ui:decorate template="/WEB-INF/templates/BasicTemplate.xhtml">
+		
+		<ui:define name="content">
+		
+			<h:form>
+ 
+    <p:menubar>
+        <p:submenu label="Location" icon="pi pi-shopping-cart">
+            <p:menuitem value="Nos véhicules" url="customer.xhtml" />
+            <p:menuitem value="Nos véhicules premium" url="customer.xhtml" />
+            <p:menuitem value="Nos destinations favorites" url="customer.xhtml" />
+            <p:separator />
+            <p:menuitem value="Faire une réservation" url="customer.xhtml" />
+        </p:submenu>
+ 
+        <p:submenu label="Mon espace Client" icon="pi pi-users">
+            <p:menuitem value="Mon Compte" url="customer.xhtml"  />
+            <p:menuitem value="Créer un compte" url="customer.xhtml"  />
+        </p:submenu>
+ 
+        <p:submenu label="Mon espace Pro" icon="pi pi-user">
+            <p:menuitem value="Mon Compte Pro" url="customer.xhtml" />
+            <p:menuitem value="Factures" url="#customer.xhtml" />
+        </p:submenu>
+ 
+        <p:submenu label="Nos Agences" icon="pi pi-home">
+            <p:submenu label="Europe">
+                <p:submenu label="France">
+                	<p:menuitem value="Nantes" url="customer.xhtml"/>
+                	<p:menuitem value="Rennes" url="customer.xhtml"/>
+                	<p:menuitem value="Brest" url="customer.xhtml"/>
+               	</p:submenu>
+                <p:submenu label="UK">
+                	<p:menuitem value="Londres" url="customer.xhtml"/>
+                	<p:menuitem value="Edinbourg" url="customer.xhtml"/>
+                	<p:menuitem value="Cardiff" url="customer.xhtml"/>
+                </p:submenu>
+       			</p:submenu>
+            <p:submenu label="Afrique">
+                <p:submenu label="Tunisie">
+                	<p:menuitem value="Tunis" url="customer.xhtml"/>
+                	<p:menuitem value="Sfax" url="customer.xhtml"/>
+                	</p:submenu>
+                <p:submenu label="Maroc">
+                	<p:menuitem value="Marrakech" url="customer.xhtml"/>
+                	<p:menuitem value="Casablanca" url="customer.xhtml"/>
+              </p:submenu>
+              </p:submenu>
+ 			</p:submenu>
+     
+ 
+        <f:facet name="options">
+            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+            <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+			
+			
+			
+			
+			
+			
+			
+			<p:layout style="min-width:400px;min-height:350px;">
+				 <p:layoutUnit position="west" resizable="true" size="400" minSize="40" maxSize="400">
+					<fieldset>
+						<legend>Entrez vos identifiant et mot de passe</legend>
+						<h:form>
+						<table>
+				<tr>
+						<td> <h:outputLabel value="Identifiant : "/></td><td><h:inputText value ="#{connexionBean.login}"/></td>
+				</tr>
+				<tr>
+						<td> <h:outputLabel value="Mot de Passe : "/></td><td><h:inputSecret value ="#{connexionBean.password}"/></td>
+				</tr>
+						</table>
+						<h:commandButton value="Entrer" action="#{connexionBean.connexion}"/>
+						</h:form>
+					</fieldset>       
+					       
+					       
+					       
+					    </p:layoutUnit>
+					 
+					    <p:layoutUnit position="center">
+									<center>			       
+								<p:imageSwitch effect="fade" id="fadeEffect">
+								    <ui:repeat value="#{imagesView.images}" var="image" id="fadeEffectImages">
+								        <p:graphicImage value="/#{image}" id="image" />
+								    </ui:repeat>
+								</p:imageSwitch>
+					        	</center>
+					    </p:layoutUnit>
+			</p:layout>
+			
+			
+		
+		</ui:define>
+		</ui:decorate>
+	</h:body>
+</html>
